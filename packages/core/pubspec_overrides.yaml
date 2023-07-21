@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: shared_dependencies
+dependency_overrides:
+  shared_dependencies:
+    path: ../shared_dependencies

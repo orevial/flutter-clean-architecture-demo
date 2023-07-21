@@ -1,0 +1,56 @@
+name: flutter_clean_architecture_demo
+description: A demo project for a multi-packages Flutter app
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 0.0.1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0 <4.0.0"
+
+dependencies:
+  # Flutter SDK dependencies
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # Local dependencies
+  shared_dependencies:
+    path: ../packages/shared_dependencies
+  core:
+    path: ../packages/core/
+  domain:
+    path: ../packages/domain/
+  data:
+    path: ../packages/data/
+  design_system:
+    path: ../packages/presentation/design_system
+  screens:
+    path: ../packages/presentation/screens
+
+  # Inherited dependencies
+  # Note: any is actually OK here because we are depending on shared_dependencies package
+  # which declares version, so in reality we don't use any version but constrained versions
+  get_it: any
+  go_router: any
+  injectable: any
+  flutter_bloc: ^8.1.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Inherited dev dependencies
+  # Note: any is actually OK here because we are depending on shared_dependencies package
+  # which declares version, so in reality we don't use any version but constrained versions
+  build_runner: any
+  dart_code_metrics: any
+  dartz: any
+  injectable_generator: any
+  mocktail: any
+  very_good_analysis: any
+
+flutter:
+  uses-material-design: true

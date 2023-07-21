@@ -1,0 +1,10 @@
+# melos_managed_dependency_overrides: core,design_system,domain,shared_dependencies
+dependency_overrides:
+  core:
+    path: ../../core
+  design_system:
+    path: ../design_system
+  domain:
+    path: ../../domain
+  shared_dependencies:
+    path: ../../shared_dependencies

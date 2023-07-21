@@ -1,0 +1,238 @@
+name: flutter_clean_architecture_demo
+
+packages:
+  - app
+  - packages/shared_dependencies
+  - packages/core
+  - packages/data
+  - packages/domain
+  - packages/presentation/design_system
+  - packages/presentation/screens
+
+scripts:
+  ###############################################
+  ##              BUILD COMMANDS               ##
+  ###############################################
+  build:pub_get:all:
+    run: flutter pub get
+    exec:
+      concurrency: 6
+    description: Install all dependencies
+
+  build:clean:
+    run: |
+      flutter clean && \
+      flutter pub get
+    exec:
+      concurrency: 6
+    description: Clean Flutter package and install dependencies
+
+  build:clean:all:
+    run: melos run --no-select build:clean
+    description: Clean Flutter package and install dependencies for all packages
+
+  build:codegen:build:
+    run: flutter pub run build_runner build --delete-conflicting-outputs
+    exec:
+      concurrency: 1
+      orderDependents: true
+    packageFilters:
+      dependsOn: "build_runner"
+    description: Run code generation using build_runner in a specific package
+
+  build:codegen:build:all:
+    run: melos run build:codegen:build --no-select
+    description: Run code generation using build_runner for all packages in the project
+
+  build:codegen:watch:
+    run: flutter pub run build_runner watch --delete-conflicting-outputs
+    exec:
+      concurrency: 1
+      orderDependents: true
+    packageFilters:
+      dependsOn: "build_runner"
+    description: Run code generation using build_runner in a specific package, and watch any changes in this package
+
+  build:codegen:l10n:
+    run: flutter gen-l10n
+    exec:
+      concurrency: 1
+    packageFilters:
+      scope: "screens"
+    description: Run flutter gen-l10n code generation using intl in screens package
+
+  build:build-dev-app:
+    exec: flutter build appbundle --release --flavor dev -t lib/main_dev.dart
+    description: Build dev app
+    packageFilters:
+      scope: "flutter_clean_architecture_demo"
+
+  build:build-uat-app:
+    exec: flutter build appbundle --release --flavor uat -t lib/main_uat.dart
+    description: Build UAT app
+    packageFilters:
+      scope: "flutter_clean_architecture_demo"
+
+  build:build-prod-app:
+    exec: flutter build appbundle --release --flavor prod -t lib/main_prod.dart
+    description: Build prod app
+    packageFilters:
+      scope: "flutter_clean_architecture_demo"
+
+  ###############################################
+  ##             QUALITY COMMANDS              ##
+  ###############################################
+  quality:analyze:
+    exec: |
+      sidecar analyze
+    packageFilters:
+      dirExists:
+        - lib
+    description: |
+      Run Flutter static analysis checks and format
+      Note: you can also rely on your IDEs Dart Analysis / Issues window.
+
+  quality:analyze:all:
+    run: melos run --no-select quality:analyze
+    description: |
+      Run Flutter static analysis checks and format all packages
+      Note: you can also rely on your IDEs Dart Analysis / Issues window.
+
+  quality:dcm-checks:
+    exec: |
+      flutter pub run dart_code_metrics:metrics check-unused-files --no-fatal-unused --exclude "{**/.dart_tool/**, **.g.dart,**.gr.dart,**.gen.dart,**.freezed.dart,**di.dart,**di.config.dart,**/generated/**}" .
+    packageFilters:
+      dirExists:
+        - lib
+    description: Run Dart Code Metrics (DCM) extended checks
+
+  quality:dcm-checks:all:
+    run: melos run --no-select quality:dcm-checks
+    description: Run Dart Code Metrics (DCM) extended checks on all packages
+
+
+  ###############################################
+  ##              TEST COMMANDS                ##
+  ###############################################
+  test:
+    run: flutter test --no-pub --reporter compact
+    exec:
+      concurrency: 6
+    packageFilters:
+      dirExists:
+        - test
+    description: Run `flutter test` for a specific package.
+
+  test:all:
+    run: melos run test --no-select
+    description: Run all Flutter tests in this project.
+
+  test:update-goldens:
+    run: flutter test --no-pub --reporter compact --update-goldens
+    exec:
+      concurrency: 6
+    packageFilters:
+      dirExists:
+        - test
+      scope:
+        - "design_system"
+        - "screens"
+        - "flutter_clean_architecture_demo"
+    description: Run `flutter test` and update goldens for a specific package.
+
+  test:update-goldens:all:
+    run: melos run test:update-goldens --no-select
+    description: Run Flutter tests and update goldens for all packages in this project
+
+  test:with-lcov-coverage:
+    run: MELOS_ROOT_PATH/.assets/scripts/test-with-coverage.sh MELOS_ROOT_PATH MELOS_PACKAGE_PATH MELOS_PACKAGE_NAME
+    exec:
+      concurrency: 6
+    packageFilters:
+      dirExists:
+        - test
+    description: Run Flutter tests and publish local lcov coverage for a specific package
+
+  test:with-lcov-coverage:all:
+    run: |
+      melos run test:with-lcov-coverage --no-select && \
+      melos run test:combine-coverage
+    description: Run Flutter tests for all packages and generate a combined lcov coverage report
+
+  test:with-html-coverage:
+    run: |
+      MELOS_ROOT_PATH/.assets/scripts/test-with-coverage.sh MELOS_ROOT_PATH MELOS_PACKAGE_PATH MELOS_PACKAGE_NAME && \
+      melos run test:combine-coverage && \
+      melos run test:generate-html-coverage
+    exec:
+      concurrency: 6
+    packageFilters:
+      dirExists:
+        - test
+    description: Run Flutter tests for a specific package and updates global HTML coverage report
+
+  test:with-html-coverage:all:
+    run: |
+      melos run test:with-lcov-coverage --no-select && \
+      melos run test:combine-coverage && \
+      melos run test:generate-html-coverage
+      echo "🧪📊 You can find coverage report in the following folder: MELOS_ROOT_PATH/.assets/coverage_report/index.html\n\n💡To open it just run: open MELOS_ROOT_PATH/.assets/coverage_report/index.html"
+    description: Run Flutter tests for all packages and generate a combined HTML coverage report
+
+  test:with-html-coverage:all:auto-open:
+    run: |
+      melos run test:with-lcov-coverage --no-select && \
+      melos run test:combine-coverage && \
+      melos run test:generate-html-coverage
+      open MELOS_ROOT_PATH/.assets/coverage_report/index.html
+    description: Run Flutter tests for all packages and generate a combined HTML coverage report
+
+  test:combine-coverage:
+    run: MELOS_ROOT_PATH/.assets/scripts/combine-coverage.sh MELOS_ROOT_PATH
+    description: Combine individual lcov coverage into a single lcov coverage file
+
+  test:generate-html-coverage:
+    run: MELOS_ROOT_PATH/.assets/scripts/generate-html-coverage.sh MELOS_ROOT_PATH
+    description: Take combined lcov file and generate a human-readable HTML report
+
+  test:with-junit-report:
+    run: |
+      MELOS_ROOT_PATH/.assets/scripts/test-with-junit-report.sh MELOS_ROOT_PATH MELOS_PACKAGE_NAME && \
+      jrm MELOS_ROOT_PATH/.assets/junit_test_reports/combined.xml "MELOS_ROOT_PATH/.assets/junit_test_reports/*_test_report.xml" && \
+      junit2html MELOS_ROOT_PATH/.assets/junit_test_reports/combined.xml MELOS_ROOT_PATH/.assets/junit_test_reports/test-results.html
+    exec:
+      concurrency: 6
+    packageFilters:
+      dirExists:
+        - test
+    description: Run Flutter tests for a specific package and updates global HTML JUnit report
+
+  test:with-junit-report:all:
+    run: |
+      melos run test:with-junit-report --no-select
+      echo "Having a problem ? Make sure you have the following libs installed:"
+      echo "npm install -g junit-report-merger"
+      echo "pip3 install junit2html"
+    description: Run Flutter tests for all packages and generate a combined HTML JUnit report
+
+  run:dev-app:
+    exec: flutter run -t 'MELOS_ROOT_PATH/app/lib/main_dev.dart' --flavor dev
+    packageFilters:
+      scope: "flutter_clean_architecture_demo"
+
+  ###############################################
+  ##               RUN COMMANDS                ##
+  ###############################################
+  run:uat-app:
+    exec: flutter run -t 'MELOS_ROOT_PATH/app/lib/main_uat.dart' --flavor uat
+    packageFilters:
+      scope: "flutter_clean_architecture_demo"
+
+  run:prod-app:
+    exec: flutter run -t 'MELOS_ROOT_PATH/app/lib/main_prod.dart' --flavor prod
+    packageFilters:
+      scope: "flutter_clean_architecture_demo"
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0 <4.0.0"

@@ -1,0 +1,61 @@
+name: screens
+description: Presentation layer of the Clean Architecture model, specifically the app UI screens
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0 <4.0.0"
+
+dependencies:
+  # Flutter SDK dependencies
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # Local dependencies
+  shared_dependencies:
+    path: ../../shared_dependencies
+  core:
+    path: ../../core
+  design_system:
+    path: ../design_system/
+  domain:
+    path: ../../domain/
+
+  # Inherited dependencies
+  # Note: any is actually OK here because we are depending on shared_dependencies package
+  # which declares version, so in reality we don't use any version but constrained versions
+  freezed_annotation: any
+  get_it: any
+  go_router: any
+  injectable: any
+  intl: any
+  dartz: any
+  collection: any
+
+  # Package specific dependencies
+  bloc: ^8.1.1
+  flutter_bloc: ^8.1.2
+
+dev_dependencies:
+  # Note: dev_dependencies cannot be inherited so we still have to specify version for them
+  flutter_test:
+    sdk: flutter
+
+  # Inherited dev dependencies
+  # Note: any is actually OK here because we are depending on shared_dependencies package
+  # which declares version, so in reality we don't use any version but constrained versions
+  build_runner: any
+  dart_code_metrics: any
+  freezed: any
+  injectable_generator: any
+  mocktail: any
+  very_good_analysis: any
+
+  # Package specific dev dependencies
+  bloc_test: ^9.1.1
+
+flutter:
+  uses-material-design: true

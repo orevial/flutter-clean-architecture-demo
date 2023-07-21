@@ -1,0 +1,31 @@
+name: core
+description: Core package, shared with all packages
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  # Local dependencies
+  shared_dependencies:
+    path: ../shared_dependencies
+
+  # Inherited dependencies
+  # Note: any is actually OK here because we are depending on shared_dependencies package
+  # which declares version, so in reality we don't use any version but constrained versions
+  dartz: any
+  injectable: any
+  get_it: any
+
+dev_dependencies:
+  # Inherited dev dependencies
+  # Note: any is actually OK here because we are depending on shared_dependencies package
+  # which declares version, so in reality we don't use any version but constrained versions
+  very_good_analysis: any
+  dart_code_metrics: any
+  build_runner: any
+  injectable_generator: any
+
+  # Package specific dev dependencies
+  test: any

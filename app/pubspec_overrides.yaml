@@ -1,0 +1,14 @@
+# melos_managed_dependency_overrides: core,data,design_system,domain,screens,shared_dependencies
+dependency_overrides:
+  core:
+    path: ../packages/core
+  data:
+    path: ../packages/data
+  design_system:
+    path: ../packages/presentation/design_system
+  domain:
+    path: ../packages/domain
+  screens:
+    path: ../packages/presentation/screens
+  shared_dependencies:
+    path: ../packages/shared_dependencies

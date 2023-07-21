@@ -1,0 +1,10 @@
+name: melos_root
+description: Root package for Melos
+
+environment:
+  # Keep this lower than our actual packages pubspec because it is used by CI action
+  # dart-code-metrics-action and makes it fail for some reason...
+  sdk: '>=2.19.0 <4.0.0'
+
+dev_dependencies:
+  melos: ^3.0.0

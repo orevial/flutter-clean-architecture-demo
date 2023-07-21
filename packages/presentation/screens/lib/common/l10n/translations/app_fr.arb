@@ -1,0 +1,14 @@
+{
+  "@_common": {},
+  "common_error": "Quelque chose a échoué",
+  "common_retry": "Réessayer",
+  "@_settings_mode": {},
+  "settings_mode_title": "Paramètres",
+  "settings_mode_light": "Clair",
+  "settings_mode_dark": "Sombre",
+  "settings_mode_system": "Système",
+  "@_course_list": {},
+  "course_list_title": "Cours Flutter",
+  "@_course_details": {},
+  "course_details_doesnt_exist": "Désolé, ce cours n'a pas encore été créé..."
+}

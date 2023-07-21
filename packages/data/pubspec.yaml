@@ -1,0 +1,54 @@
+name: data
+description: Data layer of the Clean Architecture model
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  # Local dependencies
+  shared_dependencies:
+    path: ../shared_dependencies
+  core:
+    path: ../core/
+  domain:
+    path: ../domain/
+  screens:
+    path: ../presentation/screens/
+
+  # Inherited dependencies
+  # Note: any is actually OK here because we are depending on shared_dependencies package
+  # which declares version, so in reality we don't use any version but constrained versions
+  dartz: any
+  freezed_annotation: any
+  get_it: any
+  injectable: any
+  intl: any
+  json_annotation: any
+  collection: any
+
+  # Package specific dependencies
+  dio: ^5.0.3
+  retrofit: ^4.0.1
+  shared_preferences: ^2.1.1
+
+dev_dependencies:
+  # Note: dev_dependencies cannot be inherited so we still have to specify version for them
+  flutter_test:
+    sdk: flutter
+
+  # Inherited dev dependencies
+  # Note: any is actually OK here because we are depending on shared_dependencies package
+  # which declares version, so in reality we don't use any version but constrained versions
+  build_runner: any
+  dart_code_metrics: any
+  freezed: any
+  injectable_generator: any
+  json_serializable: any
+  mocktail: any
+  very_good_analysis: any
+
+  # Package specific dev dependencies
+  http_mock_adapter: ^0.4.4
+  retrofit_generator: ^7.0.1

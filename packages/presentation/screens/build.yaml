@@ -1,0 +1,13 @@
+targets:
+  $default:
+    builders:
+      source_gen|combining_builder:
+        options:
+          build_extensions:
+            '^lib/{{dir}}/{{file}}.dart': 'lib/{{dir}}/generated/{{file}}.g.dart'
+            '^test/{{dir}}/{{file}}.dart': 'test/{{dir}}/generated/{{file}}.g.dart'
+      freezed:
+        options:
+          build_extensions:
+            '^lib/{{dir}}/{{file}}.dart': 'lib/{{dir}}/generated/{{file}}.freezed.dart'
+            '^test/{{dir}}/{{file}}.dart': 'test/{{dir}}/generated/{{file}}.freezed.dart'

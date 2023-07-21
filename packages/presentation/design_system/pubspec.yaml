@@ -1,0 +1,68 @@
+name: design_system
+description: Demo Design System
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0 <4.0.0"
+
+dependencies:
+  # Flutter SDK dependencies
+  flutter:
+    sdk: flutter
+
+  # Local dependencies
+  core:
+    path: ../../core
+  shared_dependencies:
+    path: ../../shared_dependencies
+
+  # Inherited dependencies
+  # Note: any is actually OK here because we are depending on shared_dependencies package
+  # which declares version, so in reality we don't use any version but constrained versions
+  dartz: any
+
+dev_dependencies:
+  # Note: dev_dependencies cannot be inherited so we still have to specify version for them
+  flutter_test:
+    sdk: flutter
+
+  # Inherited dev dependencies
+  # Note: any is actually OK here because we are depending on shared_dependencies package
+  # which declares version, so in reality we don't use any version but constrained versions
+  alchemist: any
+  build_runner: any
+  dart_code_metrics: any
+  flutter_gen_runner: any
+  very_good_analysis: any
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: fonts/roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: fonts/roboto/Roboto-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: fonts/roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: fonts/roboto/Roboto-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: fonts/roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: fonts/roboto/Roboto-BoldItalic.ttf
+          weight: 700
+          style: italic
+
+flutter_gen:
+  output: lib/fonts/gen
+  assets:
+    enabled: true
+    outputs:
+      # Assets need to be referenced with the package option, see
+      # https://docs.flutter.dev/development/ui/assets-and-images#from-packages
+      package_parameter_enabled: true

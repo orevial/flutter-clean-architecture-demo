@@ -1,0 +1,14 @@
+{
+  "@_common": {},
+  "common_error": "Something went wrong",
+  "common_retry": "Retry",
+  "@_settings_mode": {},
+  "settings_mode_title": "Settings",
+  "settings_mode_light": "Light",
+  "settings_mode_dark": "Dark",
+  "settings_mode_system": "System",
+  "@_course_list": {},
+  "course_list_title": "Flutter courses",
+  "@_course_details": {},
+  "course_details_doesnt_exist": "Sorry, this course is yet to be created..."
+}
