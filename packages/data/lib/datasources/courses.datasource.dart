@@ -3,7 +3,7 @@ import 'package:data/helpers/local_storage.dart';
 import 'package:data/models/user_progress.model.dart';
 import 'package:injectable/injectable.dart';
 
-abstract class UserDataSource {
+abstract class CoursesDataSource {
   Future<List<CourseProgressResponse>> getCourseProgresses();
 
   Future<void> updateCourseProgress(
@@ -11,11 +11,11 @@ abstract class UserDataSource {
   );
 }
 
-@Injectable(as: UserDataSource)
-class UserDataSourceImpl implements UserDataSource {
+@Injectable(as: CoursesDataSource)
+class CoursesDataSourceImpl implements CoursesDataSource {
   final LocalStorage localStorage;
 
-  UserDataSourceImpl({required this.localStorage});
+  CoursesDataSourceImpl({required this.localStorage});
 
   @override
   Future<List<CourseProgressResponse>> getCourseProgresses() {

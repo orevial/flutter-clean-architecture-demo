@@ -11,11 +11,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:data/api/api.dart' as _i9;
 import 'package:data/datasources/settings.datasource.dart' as _i5;
-import 'package:data/datasources/user.datasource.dart' as _i8;
+import 'package:data/datasources/courses.datasource.dart' as _i8;
 import 'package:data/di/modules/api.module.dart' as _i12;
 import 'package:data/helpers/local_storage.dart' as _i4;
 import 'package:data/repositories/settings.repository.dart' as _i7;
-import 'package:data/repositories/user.repository.dart' as _i11;
+import 'package:data/repositories/courses.repository.dart' as _i11;
 import 'package:dio/dio.dart' as _i3;
 import 'package:domain/repositories/courses.repository.dart' as _i10;
 import 'package:domain/repositories/settings.repository.dart' as _i6;

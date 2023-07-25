@@ -1,5 +1,5 @@
 import 'package:data/api/api.dart';
-import 'package:data/datasources/user.datasource.dart';
+import 'package:data/datasources/courses.datasource.dart';
 import 'package:data/models/user_progress.model.dart';
 import 'package:domain/entities/course.entity.dart';
 import 'package:domain/entities/user_progress.entity.dart';
@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: CoursesRepository)
 class CoursesRepositoryImpl implements CoursesRepository {
-  final UserDataSource userDataSource;
+  final CoursesDataSource userDataSource;
   final CoursesApi api;
 
   CoursesRepositoryImpl(this.userDataSource, this.api);
